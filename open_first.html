@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script> -->
+    <style>
+        body{
+            padding:5px;
+        }
+        ul{
+            border-radius:0px;
+            width:200px;
+            list-style:none;
+            height:200px;
+            overflow: auto;
+            border:1px solid black;
+        }
+        li{
+            padding:10px;
+            margin-left: -40px;
+        }
+        #clcklst li:nth-last-child(){
+            border-radius:0px;
+        }
+        li:hover{
+            background-color:#eee;
+        }
+        #appendD{
+            position: absolute;
+            top:155px;
+            left:260px;
+            height:200px;
+        }
+        .scrollb::-webkit-scrollbar-thumb {
+            background-color:grey;
+            cursor:pointer;
+        }
+        .active{
+            background-color: #007BFF;
+            color:white;
+        }
+        input{
+            width:240px;
+            transition:1s;
+        }
+        #filter {
+            background-image: url('https://www.w3schools.com/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+    </style>
+    <title>Bootstrap test document</title>
+</head>
+<body>
+    <!-- Button trigger modal -->
+    <h1>Bootstrap</h1>
+    <input type="text" id="filter" onkeyup="flt();">
+    <div class="scrollb">
+        <ul class="list-group" id="clcklst">
+            <li class="list-group-item">Apples</li>
+            <li class="list-group-item">Oranges</li>
+            <li class="list-group-item">Bananas</li>
+        </ul>
+    </div>
+    <br>
+    <div id="appendD">
+        <ul class="list-group" id="appndUl">
+
+        </ul>
+    </div>
+    <button onclick="red()" method="post">Submit</button>
+    <script>
+        var lis = document.querySelector('#clcklst').getElementsByTagName("li");
+        $(lis).click(function(){
+            $(this).toggleClass("active");
+            var ls = [];
+            for (var index = 0; index < lis.length; index++) {
+                if ($(lis[index]).hasClass("active")) {
+                    ls.push(lis[index].innerText)
+                }
+            }
+            console.log(ls);
+            appn(ls);
+        });
+        function appn(ls) {
+            var ul = document.querySelector('#appndUl');
+            $(ul).empty();
+            for (var index = 0; index < ls.length; index++) {
+                var newls = document.createElement("li");
+                var txt = document.createTextNode(ls[index]);
+                newls.appendChild(txt)
+                newls.className = "list-group-item"
+                ul.appendChild(newls)
+            }
+        }
+        function red(){
+            var lst = document.getElementById("appndUl").getElementsByTagName("li");
+            var l = [];
+            for (var i = 0; i < lst.length; i++) {
+                l.push(lst[i].innerHTML);
+
+            }
+            console.log(l);
+
+            var url = 'chrt.html?';
+            for (var j = 0; j < l.length; j++) {
+                url += j+"="+l[j]+"&";
+            }
+            url = url.slice(0, -1);
+            console.log(url);
+            window.location.href = url;
+        }
+        function flt() {
+            var filter = document.querySelector("#filter");
+            var filt = filter.value.toUpperCase();
+            var ul = document.querySelector("#clcklst");
+            var li = ul.getElementsByTagName("li");
+            for (var i = 0; i < li.length; i++) {
+                var value = li[i].innerHTML;
+                if (value.toUpperCase().indexOf(filt) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
